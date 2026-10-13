@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Session Test - Futuristic Login Interface">
+    <title>Session Test</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div id="loginDiv">
+
+            <h1>Login</h1>
+
+            <input type="text" id="correo" placeholder="Correo">
+            <input type="password" id="password" placeholder="Password">
+
+            <button onclick="login()">Login</button>
+
+        </div>
+
+        <div id="menuDiv" class="menu">
+
+            <h1>Menu</h1>
+
+            <button onclick="profile()">Ver Perfil</button>
+            <button onclick="logout()">Logout</button>
+
+        </div>
+
+        <div class="result" id="result">
+
+        </div>
+
+    </div>
+
+    <script>
+
+        const result = document.getElementById('result')
+
+        async function login() {
+
+            const correo = document.getElementById('correo').value
+            const password = document.getElementById('password').value
+
+            try {
+
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        correo,
+                        password
+                    })
+                })
+
+                const data = await response.json()
+
+                result.innerHTML = data.message
+
+                if (data.success) {
+
+                    document.getElementById('loginDiv').style.display = 'none'
+                    document.getElementById('menuDiv').style.display = 'block'
+                }
+
+            }
+            catch (error) {
+
+                result.innerHTML = error.message
+            }
+        }
+
+        async function profile() {
+
+            try {
+
+                const response = await fetch('/profile', {
+                    method: 'GET',
+                    credentials: 'include'
+                })
+
+                const data = await response.json()
+
+                result.innerHTML = data.message
+
+            }
+            catch (error) {
+
+                result.innerHTML = error.message
+            }
+        }
+
+        async function logout() {
+
+            try {
+
+                const response = await fetch('/logout', {
+                    method: 'POST',
+                    credentials: 'include'
+                })
+
+                const data = await response.json()
+
+                result.innerHTML = data.message
+
+                if (data.success) {
+
+                    document.getElementById('loginDiv').style.display = 'block'
+                    document.getElementById('menuDiv').style.display = 'none'
+                }
+
+            }
+            catch (error) {
+
+                result.innerHTML = error.message
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>

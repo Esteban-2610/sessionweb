@@ -1,0 +1,20 @@
+{
+  "server": {
+    "port": 5000
+  },
+
+  "database": {
+    "host": "localhost",
+    "user": "postgres",
+    "password": "123456",
+    "database": "loan-electronic",
+    "port": 5432,
+    "max": 10,
+    "idleTimeoutMillis": 5000,
+    "connectionTimeoutMillis": 700
+  },
+
+  "session": {
+    "secret": "mysecretkey"
+  }
+}

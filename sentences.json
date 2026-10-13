@@ -1,0 +1,6 @@
+{
+  
+  "login": "SELECT id, username FROM usuario WHERE correo = $1 AND password = $2",
+
+  "getUsers": "SELECT * FROM usuario"
+}
